@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5 mb-5">
+  <h3 class="mb-3">Reservation d'hotels de qualité chez Luxe Agence</h3>
+  <div class="row">
+    {% if residences %} {% for rs in residences %}
+    <div class="col-lg-4 mb-4">
+      <div class="card shadow" style="width: 18rem">
+        <img src="{{ rs.image.url }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{ rs.nomResidence }}</h5>
+          <p class="card-text">{{ rs.description }}</p>
+          <a href="https://wa.me/+2250758475734" class="btn btn-success" target="_blank">Contactez-nous sur WhatsApp</a>
+
+        </div>
+      </div>
+      <a href="{% url 'updatedata' rs.id %}" class="btn btn-warning btn-sm mt-2"
+        >Modifier</a
+      >
+      <form
+        action="{% url 'deletedata' rs.id %}"
+        method="post"
+        class="d-inline"
+      >
+        {% csrf_token %}
+        <input
+          type="submit"
+          class="btn btn-danger btn-sm mt-2"
+          value="Supprimer"
+        />
+      </form>
+    </div>
+    {% endfor %} {% else %}
+    <div class="col-12">
+      <h4 class="text-center alert alert-warning">Pas d'enregistrement</h4>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
